@@ -39,7 +39,7 @@ rendering VMD scenes).
 %define target		linux-thr-ogl
 %else
   %ifarch x86_64
-  %define target	linux-lam-64-thr
+  %define target	linux-lam-64-ogl
   %else
     echo 'must specify arch in spec'
     exit 1
