@@ -1,5 +1,7 @@
 %define name		tachyon
 %define tachyondir	%{_datadir}/%{name}
+# no 64 bits gl posix threads target
+%define with_gl		0
 
 Name:		%{name}
 Group:		Graphics
@@ -17,7 +19,9 @@ BuildRequires:	libpng-devel
 BuildRequires:	texlive
 BuildRequires:	texlive-dvips
 BuildRequires:	texlive-latex
+%if %{with_gl}
 BuildRequires:	GL-devel
+%endif
 
 %description
 Tachyon is a parallel ray tracing library, for use on distributed memory
@@ -36,10 +40,10 @@ rendering VMD scenes).
 %setup -q -n %{name}
 
 %ifarch %{ix86}
-%define target		linux-thr-ogl
+%define target		linux-thr
 %else
   %ifarch x86_64
-  %define target	linux-lam-64-ogl
+  %define target	linux-64-thr
   %else
     echo 'must specify arch in spec'
     exit 1
@@ -49,7 +53,12 @@ rendering VMD scenes).
 
 %build
 pushd unix
-    make %{target} LINUX_GLX_INCS= LINUX_GLX_LIBS="-lGL -lGLU -lX11"
+    make 							\
+%if %{with_gl}
+	 LINUX_GLX_INCS= LINUX_GLX_LIBS="-lGL -lGLU -lX11"
+%endif
+	%{target}
+
 popd
 
 pushd docs
