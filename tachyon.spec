@@ -8,7 +8,7 @@ Group:		Graphics
 License:	BSD
 Summary:	Tachyon Parallel / Multiprocessor Ray Tracing System
 Version:	0.98
-Release:	%mkrel 1
+Release:	%mkrel 2
 Source:		http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.1/tachyon-0.98.1.tar.gz
 URL:		http://jedi.ks.uiuc.edu/~johns/raytracer/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
