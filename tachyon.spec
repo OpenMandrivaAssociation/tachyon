@@ -8,7 +8,7 @@ Group:		Graphics
 License:	BSD
 Summary:	Tachyon Parallel / Multiprocessor Ray Tracing System
 Version:	0.98
-Release:	%mkrel 2
+Release:	%mkrel 3
 Source:		http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.1/tachyon-0.98.1.tar.gz
 URL:		http://jedi.ks.uiuc.edu/~johns/raytracer/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -53,9 +53,10 @@ rendering VMD scenes).
 
 %build
 pushd unix
-    make 							\
+    make USEJPEG=-DUSEJPEG JPEGLIB=-ljpeg				\
+	USEPNG=-DUSEPNG PNGLIB="-lpng -lz"				\
 %if %{with_gl}
-	 LINUX_GLX_INCS= LINUX_GLX_LIBS="-lGL -lGLU -lX11"
+	LINUX_GLX_INCS= LINUX_GLX_LIBS="-lGL -lGLU -lX11"
 %endif
 	%{target}
 
