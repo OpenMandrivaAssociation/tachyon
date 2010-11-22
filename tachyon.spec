@@ -8,7 +8,7 @@ Group:		Graphics
 License:	BSD
 Summary:	Tachyon Parallel / Multiprocessor Ray Tracing System
 Version:	0.98.9
-Release:	%mkrel 1
+Release:	%mkrel 2
 Source:		http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.9/tachyon-0.98.9.tar.gz
 URL:		http://jedi.ks.uiuc.edu/~johns/raytracer/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -21,6 +21,8 @@ BuildRequires:	tetex-latex
 %if %{with_gl}
 BuildRequires:	GL-devel
 %endif
+
+Patch0:		tachyon-0.98.9-x86_64.patch
 
 %description
 Tachyon is a parallel ray tracing library, for use on distributed memory
@@ -37,6 +39,10 @@ rendering VMD scenes).
 
 %prep
 %setup -q -n %{name}
+
+%ifarch x86_64
+%patch0 -p1
+%endif
 
 %ifarch %{ix86}
 %define target		linux-thr
