@@ -7,18 +7,17 @@ Name:		%{name}
 Group:		Graphics
 License:	BSD
 Summary:	Tachyon Parallel / Multiprocessor Ray Tracing System
-Version:	0.98
-Release:	%mkrel 4
-Source:		http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.1/tachyon-0.98.1.tar.gz
+Version:	0.98.9
+Release:	%mkrel 1
+Source:		http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.9/tachyon-0.98.9.tar.gz
 URL:		http://jedi.ks.uiuc.edu/~johns/raytracer/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildRequires:	libjpeg-devel
 BuildRequires:	libnetpbm-devel
 BuildRequires:	libpng-devel
-BuildRequires:	texlive
-BuildRequires:	texlive-dvips
-BuildRequires:	texlive-latex
+BuildRequires:	tetex-dvips
+BuildRequires:	tetex-latex
 %if %{with_gl}
 BuildRequires:	GL-devel
 %endif
