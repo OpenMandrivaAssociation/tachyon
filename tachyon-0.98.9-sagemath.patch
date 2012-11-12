@@ -1,0 +1,33 @@
+--- tachyon/demosrc/main.c.orig	2011-05-30 20:29:31.657779688 -0300
++++ tachyon/demosrc/main.c	2011-05-30 20:30:29.476090456 -0300
+@@ -336,6 +336,7 @@ int main(int argc, char **argv) {
+   char * filename;
+   int node, fileindex;
+   rt_timerhandle parsetimer;
++  size_t len;
+    
+   node = rt_initialize(&argc, &argv);
+ 
+@@ -373,14 +374,19 @@ int main(int argc, char **argv) {
+     parsetimer=rt_timer_create();
+     rt_timer_start(parsetimer);
+ 
+-    if (strstr(filename, ".nff") || strstr(filename, ".NFF")) {
++    len = strlen(filename);
++
++    if (len > 4 && (!strcmp(filename+len-4, ".nff") ||
++                    !strcmp(filename+len-4, ".NFF"))) {
+       rc = ParseNFF(filename, scene); /* must be an NFF file */
+     }
+-    else if (strstr(filename, ".ac") || strstr(filename, ".AC")) {
++    else if (len > 3 && (!strcmp(filename+len-3, ".ac") ||
++                         !strcmp(filename+len-3, ".AC"))) {
+       rc = ParseAC3D(filename, scene); /* Must be an AC3D file */
+     }
+ #ifdef USELIBMGF
+-    else if (strstr(filename, ".mgf") || strstr(filename, ".MGF")) {
++    else if (len > 4 && (!strcmp(filename+len-4, ".mgf") ||
++                         !strcmp(filename+len-4, ".MGF"))) {
+       rc = ParseMGF(filename, scene, 1); /* Must be an MGF file */
+     }
+ #endif
