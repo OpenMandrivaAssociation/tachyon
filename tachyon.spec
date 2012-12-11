@@ -102,3 +102,45 @@ rm -rf %{buildroot}
 %{tachyondir}/*
 %dir %doc %{_docdir}/%{name}
 %doc %{_docdir}/%{name}/*
+
+
+%changelog
+* Sat Nov 05 2011 Paulo Andrade <pcpa@mandriva.com.br> 0.98.9-4mdv2012.0
++ Revision: 718345
+- Rebuild with newer libpng
+
+* Tue May 31 2011 Paulo Andrade <pcpa@mandriva.com.br> 0.98.9-3
++ Revision: 682025
+- Add patch from sagemath spkg.
+
+* Mon Nov 22 2010 Paulo Andrade <pcpa@mandriva.com.br> 0.98.9-2mdv2011.0
++ Revision: 599848
+- Correct x86_64 crash with certain inputs
+
+* Mon Nov 22 2010 Paulo Andrade <pcpa@mandriva.com.br> 0.98.9-1mdv2011.0
++ Revision: 599822
+- Update to latest upstream release
+
+* Sun Aug 23 2009 Funda Wang <fwang@mandriva.org> 0.98-4mdv2010.0
++ Revision: 419819
+- rebuild for new libjpeg v7
+
+* Sat Jun 20 2009 Paulo Andrade <pcpa@mandriva.com.br> 0.98-3mdv2010.0
++ Revision: 387429
+- Enable support for png and jpeg output.
+  disable some of the "coolest" sagemath examples. I.e. try cut&paste
+  of some of the samples at:
+  	http://wiki.sagemath.org/pics
+  that works after this patch.
+
+* Fri May 08 2009 Paulo Andrade <pcpa@mandriva.com.br> 0.98-2mdv2010.0
++ Revision: 373542
++ rebuild (emptylog)
+
+* Mon Mar 30 2009 Paulo Andrade <pcpa@mandriva.com.br> 0.98-1mdv2009.1
++ Revision: 362592
+- Initial import of tachyon, version 0.98
+  Tachyon Parallel / Multiprocessor Ray Tracing System
+  http://jedi.ks.uiuc.edu/~johns/raytracer/
+- tachyon
+
