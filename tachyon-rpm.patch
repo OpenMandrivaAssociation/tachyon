@@ -1,0 +1,192 @@
+diff -up tachyon/unix/Make-arch.r tachyon/unix/Make-arch
+--- tachyon/unix/Make-arch.r	2011-02-18 19:19:55.000000000 +0100
++++ tachyon/unix/Make-arch	2011-07-23 20:16:02.000000000 +0200
+@@ -15,7 +15,7 @@ MPILIB=$(MPIDIR)/lib
+ 
+ MISCDEFS=$(USEJPEG) $(USEPNG) $(FLT) $(MBOX)
+ MISCINC=$(JPEGINC) $(PNGINC) $(SPACEBALLINC)
+-MISCFLAGS=$(MISCDEFS) $(MISCINC)
++MISCFLAGS=$(MISCDEFS) $(MISCINC) $(OPTFLAGS)
+ MISCLIB=$(JPEGLIB) $(PNGLIB) $(SPACEBALLLIB)
+ 
+ default:
+@@ -1103,10 +1103,10 @@ linux-64-thr:
+ 	$(MAKE) all \
+ 	"ARCH = linux-64-thr" \
+ 	"CC = gcc" \
+-	"CFLAGS = -m64 -Wall -O3 -fomit-frame-pointer -ffast-math -DLinux  -DTHR -D_REENTRANT $(MISCFLAGS)" \
++	"CFLAGS = -m64 -Wall -O2 -DLinux -DTHR -D_REENTRANT $(MISCFLAGS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+-	"STRIP = strip" \
++	"STRIP = touch" \
+ 	"RANLIB = ranlib" \
+ 	"LIBS = -L. -ltachyon $(MISCLIB) -lm -lpthread"
+ 
+@@ -1202,10 +1202,10 @@ linux-thr:
+ 	$(MAKE) all \
+ 	"ARCH = linux-thr" \
+ 	"CC = gcc" \
+-	"CFLAGS = -m32 -Wall -O3 -fomit-frame-pointer -ffast-math -DLinux -DTHR -D_REENTRANT $(MISCFLAGS)" \
++	"CFLAGS = -m32 -Wall -O2 -DLinux -DTHR -D_REENTRANT $(MISCFLAGS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+-	"STRIP = strip" \
++	"STRIP = touch" \
+ 	"RANLIB = ranlib" \
+ 	"LIBS = -L. -ltachyon $(MISCLIB) -lm -lpthread"
+ 
+@@ -1214,7 +1214,7 @@ linux-thr-ogl:
+ 	$(MAKE) all \
+ 	"ARCH = linux-thr-ogl" \
+ 	"CC = cc" \
+-	"CFLAGS = -m32 -Wall -O3 -fomit-frame-pointer -ffast-math -DLinux -DTHR -D_REENTRANT $(MISCFLAGS) -DUSEOPENGL $(LINUX_GLX_INCS)" \
++	"CFLAGS = -m32 -Wall -O2 -DLinux -DTHR -D_REENTRANT $(MISCFLAGS) -DUSEOPENGL $(LINUX_GLX_INCS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+ 	"STRIP = touch" \
+@@ -1225,7 +1225,7 @@ linux-64-thr-ogl:
+ 	$(MAKE) all \
+ 	"ARCH = linux-64-thr-ogl" \
+ 	"CC = cc" \
+-	"CFLAGS = -m64 -Wall -O3 -fomit-frame-pointer -ffast-math -DLinux -DTHR -D_REENTRANT $(MISCFLAGS) -DUSEOPENGL $(LINUX_GLX_INCS)" \
++	"CFLAGS = -m64 -Wall -O2 -DLinux -DTHR -DLP64 -D_REENTRANT $(MISCFLAGS) -DUSEOPENGL $(LINUX_GLX_INCS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+ 	"STRIP = touch" \
+@@ -1284,25 +1284,37 @@ linux-beowulf-mpi:
+ linux-lam:
+ 	$(MAKE) all \
+ 	"ARCH = linux-lam" \
+-	"CC = hcc" \
+-	"CFLAGS = -m486 -Wall -O3 -fomit-frame-pointer -ffast-math -I$(LAMHOME)/h -DLinux -DMPI $(MISCFLAGS)" \
++	"CC = mpicc" \
++	"CFLAGS = -m32 -Wall -O2 $(LAMFLAGS) -DLinux -DMPI $(MISCFLAGS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+-	"STRIP = strip" \
++	"STRIP = touch" \
+ 	"RANLIB = ranlib" \
+-	"LIBS = -L. -L$(LAMHOME)/lib -ltachyon -lmpi $(MISCLIB) -lm"
++	"LIBS = -L. -ltachyon $(LAMLIBS) $(MISCLIB) -lm"
++
++# Linux x86 using LAM MPI, with OpenGL display
++linux-lam-ogl:
++	$(MAKE) all \
++	"ARCH = linux-lam-ogl" \
++	"CC = mpicc" \
++	"CFLAGS = -m32 -Wall -O2 $(LAMFLAGS) -DLinux -DMPI $(MISCFLAGS) -DUSEOPENGL $(LINUX_GLX_INCS)" \
++	"AR = ar" \
++	"ARFLAGS = r" \
++	"STRIP = touch" \
++	"RANLIB = ranlib" \
++	"LIBS = -L. -ltachyon $(LAMLIBS) $(LINUX_GLX_LIBS) $(MISCLIB) -lm"
+ 
+ # Linux AMD64/EM64T using LAM MPI
+-linux-lam-64:
++linux-64-lam:
+ 	$(MAKE) all \
+-	"ARCH = linux-lam-64" \
+-	"CC = hcc" \
+-	"CFLAGS = -m64 -Wall -O3 -fomit-frame-pointer -ffast-math -I$(LAMHOME)/h -DLinux -DMPI  $(MISCFLAGS)" \
++	"ARCH = linux-64-lam" \
++	"CC = mpicc" \
++	"CFLAGS = -m64 -Wall -O2 $(LAMFLAGS) -DLinux -DMPI -DLP64 $(MISCFLAGS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+-	"STRIP = strip" \
++	"STRIP = touch" \
+ 	"RANLIB = ranlib" \
+-	"LIBS = -L. -L$(LAMHOME)/lib -ltachyon -lmpi $(MISCLIB) -lm"
++	"LIBS = -L. -ltachyon $(LAMLIBS) $(MISCLIB) -lm"
+ 
+ linux-mpi:
+ 	$(MAKE) all \
+@@ -1340,16 +1352,16 @@ linux-mpi-64:
+ 
+ 
+ # Linux AMD64/EM64T using LAM MPI, with OpenGL display
+-linux-lam-64-ogl:
++linux-64-lam-ogl:
+ 	$(MAKE) all \
+-	"ARCH = linux-lam-64-ogl" \
+-	"CC = hcc" \
+-	"CFLAGS = -m64 -Wall -O3 -fomit-frame-pointer -ffast-math -I$(LAMHOME)/h -DLinux -DMPI  -DUSEOPENGL $(LINUX_GLX_INCS) $(MISCFLAGS)" \
++	"ARCH = linux-64-lam-ogl" \
++	"CC = mpicc" \
++	"CFLAGS = -m64 -Wall -O2 $(LAMFLAGS) -DLinux -DMPI -DLP64 -DUSEOPENGL $(LINUX_GLX_INCS) $(MISCFLAGS)" \
+ 	"AR = ar" \
+ 	"ARFLAGS = r" \
+-	"STRIP = strip" \
++	"STRIP = touch" \
+ 	"RANLIB = ranlib" \
+-	"LIBS = -L. -L$(LAMHOME)/lib -ltachyon -lmpi $(LINUX_GLX_LIBS) $(MISCLIB) -lm"
++	"LIBS = -L. -ltachyon $(LAMLIBS) $(LINUX_GLX_LIBS) $(MISCLIB) -lm"
+ 
+ # Linux x86 using LAM MPI and threads
+ linux-lam-thr:
+diff -up tachyon/unix/Make-config.r tachyon/unix/Make-config
+--- tachyon/unix/Make-config.r	2011-01-20 06:35:01.000000000 +0100
++++ tachyon/unix/Make-config	2011-07-23 20:09:17.000000000 +0200
+@@ -57,7 +57,7 @@ X11LIB= -lX11
+ ##########################################################################
+ 
+ # Standard MPICH installation location
+-MPIDIR=/usr/local/mpi
++MPIDIR=/usr
+ 
+ # UMR CS Dept
+ #MPIDIR=/software/all/mpi
+@@ -68,6 +68,10 @@ MPIDIR=/usr/local/mpi
+ # Cornell Theory Center SP-2  splogin.tc.cornell.edu
+ #MPIDIR=/usr/local/app/mpich
+ 
++# LAM
++LAMFLAGS=`pkg-config --cflags lam`
++LAMLIBS=`pkg-config --libs lam`
++
+ 
+ ##########################################################################
+ # Floating point configuration:
+@@ -108,14 +112,14 @@ MBOX=
+ #   http://www.ijg.org/files/
+ ##########################################################################
+ # Uncomment the following lines to disable JPEG support
+-USEJPEG=
+-JPEGINC=
+-JPEGLIB=
++#USEJPEG=
++#JPEGINC=
++#JPEGLIB=
+ 
+ # Uncomment the following lines to enable JPEG support
+-#USEJPEG= -DUSEJPEG
+-#JPEGINC= -I/usr/local/include
+-#JPEGLIB= -L/usr/local/lib -ljpeg
++USEJPEG= -DUSEJPEG
++JPEGINC= 
++JPEGLIB= -ljpeg
+ 
+ 
+ ##########################################################################
+@@ -128,14 +132,14 @@ JPEGLIB=
+ #   http://www.libpng.org/
+ ##########################################################################
+ # Uncomment the following lines to disable PNG support
+-USEPNG=
+-PNGINC=
+-PNGLIB=
++#USEPNG=
++#PNGINC=
++#PNGLIB=
+ 
+ # Uncomment the following lines to enable PNG support
+-#USEPNG= -DUSEPNG
+-#PNGINC= -I/usr/local/include
+-#PNGLIB= -L/usr/local/lib -lpng -lz
++USEPNG= -DUSEPNG
++PNGINC= `pkg-config --cflags libpng`
++PNGLIB= `pkg-config --libs libpng`
+ 
+ 
+ ##########################################################################
