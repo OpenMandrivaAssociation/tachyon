@@ -5,7 +5,7 @@
 %endif
 
 %define variants thr thr-ogl
-%define beta b2
+%define beta b6
 
 Summary: Parallel / Multiprocessor Ray Tracing System
 Name: tachyon
