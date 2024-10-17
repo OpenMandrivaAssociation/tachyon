@@ -11,7 +11,7 @@ Summary: Parallel / Multiprocessor Ray Tracing System
 Name: tachyon
 Version: 0.99
 Release: 0.7.%{beta}%{?dist}
-URL: http://jedi.ks.uiuc.edu/~johns/raytracer/
+URL: https://jedi.ks.uiuc.edu/~johns/raytracer/
 Source0: http://jedi.ks.uiuc.edu/~johns/raytracer/files/%{version}%{beta}/%{name}-%{version}%{beta}.tar.gz
 # taken from Debian package
 Source1: %{name}.1
